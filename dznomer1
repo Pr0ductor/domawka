@@ -3,7 +3,7 @@ double s, a;
 
 s = double.Parse(Console.ReadLine());
 
-if (Math.Log(s, 3) % 1 == 0 || Math.Log(s, 3) % 1 >= 0.99)
+if (Math.Log(s, 3) % 1 == 0 || Math.Log(s, 3) % 1 >= 0.9999999)
 {
     Console.WriteLine("Yes");
 
