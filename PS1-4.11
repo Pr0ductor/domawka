@@ -1,44 +1,26 @@
 //PS1-4.11
-class Program
+double count = 0;
+for (int i = 2; i < 100000; i++)
 {
-    static void Main(string[] args)
+    int s = 0;
+    int r = 0;
+    for (int j = 1; j <= Math.Sqrt(i + 1); j++)
     {
-        int count = 0;
-
-        for (int n = 2; n < 100000; n++)
-        {
-            int divisorsn1 = CountDivisors(n);
-            int divisorsn2 = CountDivisors(n + 1);
-
-            if (divisorsn1 == divisorsn2)
-            {
-                count++;
-            }
-        }
-
-        Console.WriteLine("Количество чисел: " + count);
+        if (i % j == 0)
+            s += 1;
+        if ((i + 1) % j == 0)
+            r += 1;
     }
 
-    static int CountDivisors(int number)
-    {
-        int count = 0;
-
-        for (int i = 1; i <= Math.Sqrt(number); i++)
-        {
-            if (number % i == 0)
-            {
-                
-                if (i == Math.Sqrt(number))
-                {
-                    count++;
-                }
-                else
-                {
-                    count += 2;
-                }
-            }
-        }
-
-        return count;
-    }
+    if (Math.Sqrt(i) % 1 == 0)
+        s = s * 2 - 1;
+    if (Math.Sqrt(i) % 1 != 0)
+        s = s * 2;
+    if (Math.Sqrt(i + 1) % 1 == 0)
+        r = r * 2 - 1;
+    if (Math.Sqrt(i + 1) % 1 != 0)
+        r = r * 2;
+    if (s == r)
+        count += 1;
 }
+Console.WriteLine(count);
