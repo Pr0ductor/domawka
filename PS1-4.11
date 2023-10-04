@@ -1,0 +1,44 @@
+//PS1-4.11
+class Program
+{
+    static void Main(string[] args)
+    {
+        int count = 0;
+
+        for (int n = 2; n < 100000; n++)
+        {
+            int divisorsn1 = CountDivisors(n);
+            int divisorsn2 = CountDivisors(n + 1);
+
+            if (divisorsn1 == divisorsn2)
+            {
+                count++;
+            }
+        }
+
+        Console.WriteLine("Количество чисел: " + count);
+    }
+
+    static int CountDivisors(int number)
+    {
+        int count = 0;
+
+        for (int i = 1; i <= Math.Sqrt(number); i++)
+        {
+            if (number % i == 0)
+            {
+                
+                if (i == Math.Sqrt(number))
+                {
+                    count++;
+                }
+                else
+                {
+                    count += 2;
+                }
+            }
+        }
+
+        return count;
+    }
+}
