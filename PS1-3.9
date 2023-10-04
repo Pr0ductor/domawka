@@ -1,0 +1,27 @@
+//PS1 - 3.19
+Random r = new Random();
+int n = 10;
+int[] arr = new int[n];
+int s = 0;
+int k = 1;
+for (int i = 0; i < arr.Length; i++)
+{
+    arr[i] = r.Next(-15, 20);
+    if (arr[i] < 0)
+        arr[i] = Math.Abs(arr[i]);
+    if (arr[i] > 0)
+    {
+        while (arr[i] > k )
+        {
+            k *= 2;
+        
+        }
+
+        arr[i] = k;
+    }
+
+    k = 1;
+    if (arr[i] == 0)
+        break;
+    Console.WriteLine($"arr[{i}] = {arr[i]}");
+}
