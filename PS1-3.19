@@ -11,7 +11,7 @@ for (int i = 0; i < arr.Length; i++)
         arr[i] = Math.Abs(arr[i]);
     if (arr[i] > 0)
     {
-        while (arr[i] > k )
+        while (arr[i] >= k )
         {
             k *= 2;
         
