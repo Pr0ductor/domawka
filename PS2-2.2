@@ -1,0 +1,16 @@
+// PS2 2.2
+
+Console.WriteLine(Pi(0.0000001));
+static double Pi(double eps)
+{
+    double pi = Math.PI;
+    double res = 4 / 3.0;
+    //double cur = 4 / 3.0;
+    double k = 1;
+    while (Math.Abs(pi - 2 * res) > eps)
+    {
+        k++;
+        res *= (4 * k * k) / (4 * k * k - 1);
+    }
+    return 2 * res;
+}
