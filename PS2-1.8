@@ -1,10 +1,10 @@
 // PS2 1.8
-
-Console.WriteLine(Sinh(1, 0.00001));
-Console.WriteLine(Math.Sinh(1));
+int x = double.Parse(Console.ReadLine());
+Console.WriteLine(Sinh(x, 0.00001));
+Console.WriteLine(Math.Sinh(x));
 static double Sinh(double x, double eps)
 {
-    double res = 0;
+    double res = 0, cnt = 0;
     double cur = x; // значение для k=0 равно x^1 / 1!
     double sinh = Math.Sinh(x); // Инициализируем значение для проверки точности
     int k = 1, f = 1;
@@ -14,6 +14,8 @@ static double Sinh(double x, double eps)
         f *= k; // Отслеживаем факториал
         res += (k % 2) * cur / f; // В сумму берем только нечетные итерации k
         k++;
+        cnt += k % 2;
     }
+    Console.WriteLine(cnt)
     return res;
 }
