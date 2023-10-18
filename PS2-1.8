@@ -2,19 +2,22 @@
 double x = double.Parse(Console.ReadLine());
 Console.WriteLine(Sinh(x, 0.00001));
 Console.WriteLine(Math.Sinh(x));
+
 static double Sinh(double x, double eps)
 {
-    double res = 0, cnt = 0;
-    double cur = x; // значение для k=0 равно x^1 / 1!
-    double sinh = Math.Sinh(x); // Инициализируем значение для проверки точности
-    int k = 1, f = 1;
-    while (sinh - res > eps) // Отслеживаем точность результата
+    double res = x, cnt = 0;
+    double sinh = Math.Sinh(x);
+    double k = 1;
+    double f = 1;
+    double powx = x;
+    while (Math.Abs(sinh - res) > eps)
     {
-        cur *= x * x; // Отслеживаем степень x
-        f *= k; // Отслеживаем факториал
-        res += (k % 2) * cur / f; // В сумму берем только нечетные итерации k
-        k++;
-        cnt += k % 2;
+        k += 2;
+        f = f * (k - 1) * k;
+        cnt++;
+        powx = powx * x * x;
+        res += powx / f;
+
     }
     Console.WriteLine(cnt);
     return res;
