@@ -1,0 +1,48 @@
+int n = int.Parse(Console.ReadLine());
+int m= int.Parse(Console.ReadLine());
+Random r = new Random();
+
+int [,] matr1 = new int[n,m];
+int [,] matr2 = new int [n,m];
+
+if (n == m)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+            matr1[i, j] = r.Next(1, 4);
+    }
+    PrintMatr(matr1);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            matr2[i, j] = matr1[j, i];
+           
+        }
+        
+    }
+
+    PrintMatr(matr2);
+}
+
+if (n != m)
+    Console.WriteLine("matrix is not transposed");
+
+
+
+static void PrintMatr(int[,] a)
+{
+    int m = a.GetLength(0);
+    int n = a.GetLength(1);
+    Console.WriteLine();
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            Console.Write($"{a[i, j],5}");
+            
+        }
+        Console.WriteLine();
+    }
+}
