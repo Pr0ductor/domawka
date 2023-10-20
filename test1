@@ -20,9 +20,19 @@ for (int i = 0; i < b.Length; i++)
     }
 }
 
-for (int j = indexmin + 1; j < indexmax; j++)
-{
-    res += b[j];
-}
 
+if (indexmin < indexmax)
+{
+    for (int j = indexmin + 1; j < indexmax; j++)
+    {
+        res += b[j];
+    }
+}
+else
+{
+    for (int j = indexmax + 1; j < indexmin; j++)
+    {
+        res += b[j];
+    }
+}
 Console.WriteLine(res);
