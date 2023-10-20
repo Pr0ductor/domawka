@@ -1,15 +1,28 @@
-int[] b = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int[] b = {2, 1, 10, 20, 30, 40, 1, 2 };
 
-double sum = 0;
 int max = int.MinValue;
 int min = int.MaxValue;
-
+int indexmax = 0;
+int indexmin = 0;
+int res = 0;
 for (int i = 0; i < b.Length; i++)
 {
     if (b[i] > max)
+    {
         max = b[i];
+        indexmax = i;
+    }
+
     if (b[i] < min)
+    {
         min = b[i];
+        indexmin = i;
+    }
 }
-sum = min + max;
-Console.WriteLine(sum);
+
+for (int j = indexmin + 1; j < indexmax; j++)
+{
+    res += b[j];
+}
+
+Console.WriteLine(res);
