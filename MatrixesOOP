@@ -1,0 +1,148 @@
+using System.Text;
+using System.Threading.Channels;
+using MatrixOOP;
+
+namespace MatrixOOP
+{
+    internal class Matrix
+    {
+        private int rows;
+        private int columns;
+        private int[,] matrix;
+
+        public int Rows
+        {
+            get { return rows; }
+        }
+
+        public int Columns
+        {
+            get { return columns; }
+        }
+
+        public int this[int i, int j]
+        {
+            get { return matrix[i, j]; }
+            set { matrix[i, j] = value; }
+        }
+
+        public Matrix(int rows, int columns)
+        {
+            this.rows = rows;
+            this.columns = columns;
+            matrix = new int[rows, columns];
+        }
+
+        public Matrix(int size) : this(size, size)
+        {
+        }
+        
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    sb.Append($"{matrix[i, j],4}");
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+        
+        public Matrix(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+            string[] size = lines[0].Split(' ');
+            int n = int.Parse(size[0]);
+            int m = int.Parse(size[1]);
+            
+            this.rows = n;
+            this.columns = m;
+            matrix = new int[n, m];
+
+            for (int i = 1; i < n + 1; i++)
+            {
+                string[] elements = lines[i].Split(' ');
+                for (int j = 0; j < m; j++)
+                {
+                    matrix[i - 1, j] = int.Parse(elements[j]);
+                }
+            }
+        }
+        
+        public void Replace()
+        {
+            if (rows != columns)
+                throw new InvalidOperationException("Матрица должна быть квадратной для проверки главной диагонали.");
+            
+            bool goodDiagonal = true;
+            for (int i = 0; i < rows - 1; i++)
+            {
+                if (matrix[i, i] >= matrix[i + 1, i + 1])
+                {
+                    goodDiagonal = false;
+                    break;
+                }
+            }
+            
+            if (goodDiagonal)
+            {
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < columns; j++)
+                    {
+                        if (Simple(matrix[i, j]))
+                        {
+                            matrix[i, j] = 1;
+                        }
+                    }
+            }
+        }
+        
+        private bool Simple(int countDel)
+        {
+            if (countDel < 2)
+                return false;
+
+            for (int i = 2; i <= Math.Sqrt(countDel); i++)
+            {
+                if (countDel % i == 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static Matrix operator *(Matrix a, Matrix b)
+        {
+            if (a.columns != b.rows)
+                    throw new ArgumentException("Такой ужас умножать нельзя!");
+            var res = new Matrix(a.rows, b.columns);
+            for (int i = 0; i < a.rows; i++)
+                for (int j = 0; j < b.columns; j++)
+                    for (int x = 0; x < b.rows; x++)
+                        res[i, j] += a[i, x] * b[x, j];
+
+            return res;
+        }
+    }
+}
+
+public class Program
+{
+    static void Main()
+    {
+        var m1 = new Matrix("/Users/denis/RiderProjects/Matrix/Matrix/bin/Debug/net7.0/matrixes.txt");
+        Console.WriteLine(m1);
+        m1.Replace();
+        Console.WriteLine(m1);
+        Console.WriteLine();
+        var m2 = new Matrix("/Users/denis/RiderProjects/Matrix/Matrix/bin/Debug/net7.0/matrixes2.txt");
+        Console.WriteLine(m2);
+        m2.Replace();
+        Console.WriteLine(m2);
+        Console.WriteLine();
+        var m3 = m1 * m2;
+        Console.WriteLine(m3);
+    }
+}
